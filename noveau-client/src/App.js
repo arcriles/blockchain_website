@@ -1,62 +1,27 @@
 import logo from './logo.svg';
 import './App.css';
+import ContractData from './ContractData';
+import Profile from './Profile.js';
 
-import { useConnect, useAccount, useDisconnect, WagmiConfig, createConfig, configureChains , useConfig} from 'wagmi';
-import { goerli } from 'wagmi/chains';
-import { publicProvider } from 'wagmi/providers/public';
-import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
-import { useState } from 'react';
+import { WagmiConfig, createConfig } from 'wagmi'
+import { goerli } from 'wagmi/chains'
+import { createPublicClient, http } from 'viem'
 
-const { chains, publicClient, webSocketPublicClient } = configureChains(
-  [goerli],
-  [publicProvider()],
-)
-
-const metaMaskConnector = new MetaMaskConnector({
-  chains: [goerli],
-})
-
-const client = createConfig({
+const config = createConfig({
   autoConnect: true,
-  connectors: [metaMaskConnector],
-  publicClient,
-  webSocketPublicClient,
+  publicClient: createPublicClient({
+    chain: goerli,
+    transport: http(),
+  }),
 })
-
 
 function App() {
   return (
-    <WagmiConfig config={client}>
+    <WagmiConfig config={config}>
       <Profile />
+      <ContractData />
     </WagmiConfig>
   )
 }
 
-function Profile() {
-  const { connector: activeConnector, isConnected } = useAccount()
-  const { connect, connectors, error, isLoading, pendingConnector } =
-    useConnect()
- 
-  return (
-    <>
-      {isConnected && <div>Connected to {activeConnector.name}</div>}
- 
-      {connectors.map((connector) => (
-        <button
-          disabled={!connector.ready}
-          key={connector.id}
-          onClick={() => connect({ connector })}
-        >
-          {connector.name}
-          {isLoading &&
-            pendingConnector?.id === connector.id &&
-            ' (connecting)'}
-        </button>
-      ))}
- 
-      {error && <div>{error.message}</div>}
-    </>
-  )
-}
-
-export default App;
+export default App
