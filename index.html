@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Noveau</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="all,follow">
+    <!-- Bootstrap CSS-->
+    <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+    <!-- Font Awesome CSS-->
+    <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">
+    <!-- Google fonts - Roboto -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,700">
+    <!-- owl carousel-->
+    <link rel="stylesheet" href="vendor/owl.carousel/assets/owl.carousel.css">
+    <link rel="stylesheet" href="vendor/owl.carousel/assets/owl.theme.default.css">
+    <!-- theme stylesheet-->
+    <link rel="stylesheet" href="css/style.default.css" id="theme-stylesheet">
+    <!-- Custom stylesheet - for your changes-->
+    <link rel="stylesheet" href="css/custom.css">
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="favicon.png">
+    <!-- Tweaks for older IEs--><!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+  </head>
+  <body>
+    <!-- navbar-->
+    <header class="header mb-5">
+     
+        
+      </div>
+      <nav class="navbar navbar-expand-lg">
+        <div class="container"><a href="index.html" class="navbar-brand home"><img src="img/logo.png" alt="Noveau" class="d-none d-md-inline-block"><img src="img/logo-small.png" alt="Obaju logo" class="d-inline-block d-md-none"><span class="sr-only">Noveau - go to homepage</span></a>
+          <div class="navbar-buttons">
+            <button type="button" data-toggle="collapse" data-target="#navigation" class="btn btn-outline-secondary navbar-toggler"><span class="sr-only">Toggle navigation</span><i class="fa fa-align-justify"></i></button>
+            <button type="button" data-toggle="collapse" data-target="#search" class="btn btn-outline-secondary navbar-toggler"><span class="sr-only">Toggle search</span><i class="fa fa-search"></i></button><a href="basket.html" class="btn btn-outline-secondary navbar-toggler"><i class="fa fa-shopping-cart"></i></a>
+          </div>
+          <div id="navigation" class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item"><a href="index.html" class="nav-link active">Home</a></li>
+                  <li>
+                  </li>
+                </ul>
+              </li>
+             
+            <div class="navbar-buttons d-flex justify-content-end">
+              <!-- /.nav-collapse-->
+              <div id="search-not-mobile" class="navbar-collapse collapse"></div><a data-toggle="collapse" href="#search" class="btn navbar-btn btn-primary d-none d-lg-inline-block"><span class="sr-only">Toggle search</span><i class="fa fa-search"></i></a>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <div id="search" class="collapse">
+        <div class="container">
+          <form role="search" class="ml-auto">
+            <div class="input-group">
+              <input type="text" placeholder="Search" class="form-control">
+              <div class="input-group-append">
+                <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </header>
+    <div id="all">
+      <div id="content">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12">
+              <!-- breadcrumb-->
+              <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="#">Home</a></li>
+                  <li aria-current="page" class="breadcrumb-item active"><i>Geser gambar untuk melihat</i></li>
+
+                </ol>
+              </nav>
+            </div>
+        </div>
+    </div>
+
+    <!-- 
+        ***EXTRACSS*** 
+    _________________________________________________________
+    -->
+    <style>
+        #image-track {
+  display: flex;
+  gap: 4vmin;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(0%, -50%); 
+  user-select: none; /* -- Prevent image highlighting -- */
+}
+
+#image-track > .image {
+  width: 40vmin;
+  height: 56vmin;
+  object-fit: cover;
+  object-position: 100% center;
+}
+
+/* -- YouTube Link Styles -- */
+
+body.menu-toggled > .meta-link > span {
+  color: rgb(30, 30, 30);
+}
+
+#source-link {
+  bottom: 60px;
+}
+
+#source-link > i {
+  color: rgb(94, 106, 210);
+}
+
+#yt-link > i {
+  color: rgb(239, 83, 80);
+}
+
+.meta-link {
+  align-items: center;
+  backdrop-filter: blur(3px);
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  bottom: 10px;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
+  cursor: pointer;  
+  display: inline-flex;
+  gap: 5px;
+  left: 10px;
+  padding: 10px 20px;
+  position: fixed;
+  text-decoration: none;
+  transition: background-color 400ms, border-color 400ms;
+  z-index: 10000;
+}
+
+.meta-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.meta-link > i, .meta-link > span {
+  height: 20px;
+  line-height: 20px;
+}
+
+.meta-link > span {
+  color: white;
+  font-family: "Rubik", sans-serif;
+  font-weight: 500;
+}
+    </style>
+
+    <!-- 
+        ***ISI*** 
+    _________________________________________________________
+    -->
+    <div id="image-track" data-mouse-down-at="0" data-prev-percentage="0">
+        <img class="image" src="https://images.unsplash.com/photo-1524781289445-ddf8f5695861?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80" draggable="false" />
+        <img class="image" src="https://images.unsplash.com/photo-1610194352361-4c81a6a8967e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1674&q=80" draggable="false" />
+        <img class="image" src="https://images.unsplash.com/photo-1618202133208-2907bebba9e1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80" draggable="false" />
+        <img class="image" src="https://images.unsplash.com/photo-1495805442109-bf1cf975750b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80" draggable="false" />
+        <img class="image" src="https://images.unsplash.com/photo-1548021682-1720ed403a5b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80" draggable="false" />
+        <img class="image" src="https://images.unsplash.com/photo-1496753480864-3e588e0269b3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2134&q=80" draggable="false" />
+        <img class="image" src="https://images.unsplash.com/photo-1613346945084-35cccc812dd5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1759&q=80" draggable="false" />
+        <figure class="image" ><img class="image" src="https://images.unsplash.com/photo-1516681100942-77d8e7f9dd97?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80" draggable="false" /> <figcaption>test</figcaption></figure>
+      </div>
+
+
+
+
+      
+
+          <!--
+    *** SCRIPT***
+    _________________________________________________________
+    -->
+    <script>const track = document.getElementById("image-track");
+
+        const handleOnDown = e => track.dataset.mouseDownAt = e.clientX;
+        
+        const handleOnUp = () => {
+          track.dataset.mouseDownAt = "0";  
+          track.dataset.prevPercentage = track.dataset.percentage;
+        }
+        
+        const handleOnMove = e => {
+          if(track.dataset.mouseDownAt === "0") return;
+          
+          const mouseDelta = parseFloat(track.dataset.mouseDownAt) - e.clientX,
+                maxDelta = window.innerWidth / 2;
+          
+          const percentage = (mouseDelta / maxDelta) * -100,
+                nextPercentageUnconstrained = parseFloat(track.dataset.prevPercentage) + percentage,
+                nextPercentage = Math.max(Math.min(nextPercentageUnconstrained, 0), -100);
+          
+          track.dataset.percentage = nextPercentage;
+          
+          track.animate({
+            transform: `translate(${nextPercentage}%, -50%)`
+          }, { duration: 1200, fill: "forwards" });
+          
+          for(const image of track.getElementsByClassName("image")) {
+            image.animate({
+              objectPosition: `${100 + nextPercentage}% center`
+            }, { duration: 1200, fill: "forwards" });
+          }
+        }
+        
+        /* -- Had to add extra lines for touch events -- */
+        
+        window.onmousedown = e => handleOnDown(e);
+        
+        window.ontouchstart = e => handleOnDown(e.touches[0]);
+        
+        window.onmouseup = e => handleOnUp(e);
+        
+        window.ontouchend = e => handleOnUp(e.touches[0]);
+        
+        window.onmousemove = e => handleOnMove(e);
+        
+        window.ontouchmove = e => handleOnMove(e.touches[0]);</script>
+
+
+
+    <!--
+    *** FOOTER ***
+    _________________________________________________________
+    -->
+    <!-- <div id="footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-3 col-md-6">
+            <h4 class="mb-3">Halaman</h4>
+            <ul class="list-unstyled">
+              <li><a href="index.html" class="nav-link">homepage</a></li>
+              <li><a href="history.html" class="nav-link">transaksiku</a></li>
+            </ul>
+            
+            <h4 class="mb-3">Tugas Akhir Blockchain</h4>
+          </div>
+        </div>
+      </div>
+    </div>  -->
+    <!-- /#footer-->
+    <!-- *** FOOTER END ***-->
+    
+    
+    <!--
+    *** COPYRIGHT ***
+    _________________________________________________________
+    -->
+    <!-- <div id="copyright">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6 mb-2 mb-lg-0">
+            <p class="text-center text-lg-left">©2023 Noveau Dev team.</p>
+          </div>
+          <div class="col-lg-6">
+            <p class="text-center text-lg-right">Website ini dibuat khusus untuk Tugas Akhir Blockchain, bila terdapat kesamaan dengan website lain, itu adalah kebetulan yang mungkin disengaja. website ini tidak dipublikasikan untuk umum dan hanya digunakan sebagai tugas akhir dari kelas blockchain and cryptocurrency.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div> -->
+    <!-- *** COPYRIGHT END ***-->
+    <!-- JavaScript files-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="vendor/jquery.cookie/jquery.cookie.js"> </script>
+    <script src="vendor/owl.carousel/owl.carousel.min.js"></script>
+    <script src="vendor/owl.carousel2.thumbs/owl.carousel2.thumbs.js"></script>
+    <script src="js/front.js"></script>
+  </body>
+</html>
