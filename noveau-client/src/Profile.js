@@ -1,5 +1,6 @@
 import { useAccount, useConnect, useBalance, useDisconnect } from 'wagmi'
 import { InjectedConnector } from 'wagmi/connectors/injected'
+var perf = require('./index.html');
 
 function Profile() {
   const { address } = useAccount()
@@ -20,7 +21,10 @@ function Profile() {
         <button onClick={() => disconnect()}>Disconnect</button>
       </div>
     )
-  return <button onClick={() => connect()}>Connect Wallet</button>
+  return (
+    // <button onClick={() => connect()}>Connect Wallet</button>
+    <iframe src="index.html"></iframe>
+  )
 }
 
 export default Profile

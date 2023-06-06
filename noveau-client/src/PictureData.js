@@ -1,7 +1,7 @@
 import { useContractRead, useContractWrite } from 'wagmi'
 import { contractAddress, jsonABI } from './ABI/donationsABI'
 
-function ContractData() {
+function PictureData() {
     const { data, isError, isLoading } = useContractRead({
         address: contractAddress,
         abi: jsonABI,
@@ -29,4 +29,4 @@ function ContractData() {
     )
 }
 
-export default ContractData
+export default PictureData
