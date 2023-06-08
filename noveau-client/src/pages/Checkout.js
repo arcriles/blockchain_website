@@ -1,8 +1,8 @@
-import { useContractRead, useContractWrite, useAccount, useConnect, useBalance, useDisconnect } from 'wagmi'
+import { useContractRead, useContractWrite, usePrepareContractWrite, useAccount, useConnect, useBalance, useDisconnect} from 'wagmi'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { contractAddress, jsonABI } from '../ABI/donationsABI'
 import { useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, redirect } from "react-router-dom";
 
 function Checkout() {
   let { pictureId } = useParams();
@@ -16,6 +16,22 @@ function Checkout() {
   const { data, error, isError} = useBalance({
     address: address,
   });
+
+  const { config } = usePrepareContractWrite({
+    address: contractAddress,
+    value: inputs.val,
+    abi: jsonABI,
+    functionName: 'addNewComment',
+    args: [pictureId, inputs.content, inputs.hidden],
+    onSuccess(data) {
+      redirect("../preview/" + pictureId)
+    },
+    onSettled(data, error) {
+      console.log('Settled', { data, error })
+    },
+  });
+
+  const { data: transactionData, isLoading: transactionLoacing, isSuccess, write } = useContractWrite(config);
 
   const handleChange = (event) => {
     const name = event.target.name;
@@ -38,70 +54,79 @@ function Checkout() {
       // </div>
 <div id="all">
     <div id="content">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-12">
+      <div className="container">
+        <div className="row">
+          <div className="col-lg-12">
             {/* <!-- breadcrumb--> */}
             <nav aria-label="breadcrumb">
-              <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li aria-current="page" class="breadcrumb-item active">Donasi</li>
+              <ol className="breadcrumb">
+                <li className="breadcrumb-item"><a href="#">Home</a></li>
+                <li aria-current="page" className="breadcrumb-item active">Donasi</li>
               </ol>
             </nav>
           </div>
-          <div id="checkout" class="col-lg-12">
-            <div class="box">
-              <form method="get" action="sukses.html">
+          <div id="checkout" className="col-lg-12">
+            <div className="box">
+              <form method="get">
                 <h1>Donasi</h1>
-                <div class="nav flex-column flex-md-row nav-pills text-center">
+                <div className="nav flex-column flex-md-row nav-pills text-center">
                   <h5><i>isilah data anda terlebih dahulu untuk menyelesaikan transaksi</i></h5>
                 </div>
-                <div class="content py-3">
-                  {/* <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group">
+                <div className="content py-3">
+                  {/* <div className="row">
+                    <div className="col-md-6">
+                      <div className="form-group">
                         <label for="user">User</label>
-                        <input id="user" type="text" class="form-control" />
+                        <input id="user" type="text" className="form-control" />
                       </div>
                     </div>
                   </div> */}
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group">picture ID
+                  <div className="row">
+                    <div className="col-md-6">
+                      <div className="form-group">picture ID
                         <label for="PID"></label>
-                        <input id="PID" type="text" class="form-control" value={pictureId} disabled/>
+                        <input id="PID" type="text" className="form-control" value={pictureId} disabled/>
                       </div>
                     </div>
                   </div>
                   {/* <!-- /.row--> */}
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group">
+                  <div className="row">
+                    <div className="col-md-6">
+                      <div className="form-group">
                         <label for="wallet">wallet</label>
-                        <input id="wallet" type="text" class="form-control" value={address} disabled/>
+                        <input id="wallet" type="text" className="form-control" value={address} disabled/>
                       </div>
                     </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
+                    <div className="col-md-6">
+                      <div className="form-group">
                         <label for="donasi">jumlah donasi (Wei) </label>
-                        <input id="donasi" type="number" class="form-control" />
+                        <input id="donasi" type="number" className="form-control" 
+                        name="val" 
+                        value={inputs.val || ""} 
+                        onChange={handleChange}/>
                       </div>
                     </div>
                   </div>
                   {/* <!-- /.row--> */}
-                  <div class="row">
-                    <div class="col-md-6 col-lg-3">
-                      <div class="form-group">
+                  <div className="row">
+                    <div className="col-md-6 col-lg-3">
+                      <div className="form-group">
                         <label for="pesan">pesan</label>
-                        <input id="pesan" type="long-text" class="form-control" value=""/>
+                        <input id="pesan" type="long-text" className="form-control" 
+                        name="content" 
+                        value={inputs.content || ""} 
+                        onChange={handleChange}/>
                       </div>
                     </div>
-                    <div class="col-md-6 col-lg-3">
-                      <div class="form-group">
+                    <div className="col-md-6 col-lg-3">
+                      <div className="form-group">
                         <label for="anon">anonimitas</label>
-                        <select id="anon" class="form-control">
-                          <option value="1">anonim</option>
-                          <option value="2">tidak anonim</option>
+                        <select id="anon" className="form-control" 
+                        name="hidden" 
+                        value={inputs.hidden || "1"} 
+                        onChange={handleChange}>
+                          <option value="false">tidak anonim</option>
+                          <option value="true">anonim</option>
                         </select> 
 
                       </div>
@@ -109,8 +134,11 @@ function Checkout() {
                   </div>
                   {/* <!-- /.row--> */}
                 </div>
-                <div class="box-footer d-flex justify-content-between"><a href="index.html" class="btn btn-outline-secondary"><i class="fa fa-chevron-left"></i>batalkan pesanan</a>
-                  <button type="submit" class="btn btn-primary">Selesaikan pesanan<i class="fa fa-chevron-right"></i></button>
+                <div className="box-footer d-flex justify-content-between">
+                  <Link to={`../preview/${pictureId}`}>
+                    <a className="btn btn-outline-secondary"><i className="fa fa-chevron-left"></i>batalkan pesanan</a>
+                  </Link>
+                  <button type="submit" className="btn btn-primary" onClick={() => write()}>Selesaikan pesanan<i className="fa fa-chevron-right"></i></button>
                 </div>
               </form>
             </div>
