@@ -1,6 +1,7 @@
 import { useAccount, useConnect, useBalance, useDisconnect } from 'wagmi'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { Helmet } from "react-helmet";
+import { Link } from "react-router-dom";
 // var perf = require('./index.html');
 import "./vendor/bootstrap/css/bootstrap.min.css"
 import "./vendor/font-awesome/css/font-awesome.min.css"
@@ -58,7 +59,8 @@ function Header() {
           </a>
           <div className="navbar-buttons">
             <button type="button" data-toggle="collapse" data-target="#navigation" className="btn btn-outline-secondary navbar-toggler"><span className="sr-only">Toggle navigation</span><i className="fa fa-align-justify"></i></button>
-            <button type="button" data-toggle="collapse" data-target="#search" className="btn btn-outline-secondary navbar-toggler"><span className="sr-only">Toggle search</span><i className="fa fa-search"></i></button><a href="basket.html" className="btn btn-outline-secondary navbar-toggler"><i className="fa fa-shopping-cart"></i></a>
+            <button type="button" data-toggle="collapse" data-target="#search" className="btn btn-outline-secondary navbar-toggler"><span className="sr-only">Toggle search</span><i className="fa fa-search"></i></button>
+            <a href="basket.html" className="btn btn-outline-secondary navbar-toggler"><i className="fa fa-shopping-cart"></i></a>
           </div>
           <div id="navigation" className="collapse navbar-collapse">
             <ul className="navbar-nav mr-auto">
@@ -68,28 +70,18 @@ function Header() {
             </ul>
           </div>
              
-            <div className="navbar-buttons d-flex justify-content-end">
-              {/* <!-- /.nav-collapse--> */}
-              <div id="search-not-mobile" className="navbar-collapse collapse"></div>
-              <a data-toggle="collapse" href="#search" className="btn navbar-btn btn-primary d-none d-lg-inline-block">
+          <div className="navbar-buttons d-flex justify-content-end">
+            {/* <!-- /.nav-collapse--> */}
+            <div id="search-not-mobile" className="navbar-collapse collapse"></div>
+            <Link to="./search">
+              <a data-toggle="collapse" className="btn navbar-btn btn-primary d-none d-lg-inline-block">
                 <span className="sr-only">Toggle search</span>
                 <i className="fa fa-search"></i>
               </a>
-            </div>
+            </Link>
+          </div>
         </div>
       </nav>
-      <div id="search" className="collapse">
-        <div className="container">
-          <form role="search" className="ml-auto">
-            <div className="input-group">
-              <input type="text" placeholder="Search" className="form-control"></input>
-              <div className="input-group-append">
-                <button type="button" className="btn btn-primary"><i className="fa fa-search"></i></button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
     </div>
   )
 }
