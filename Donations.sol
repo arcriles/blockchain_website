@@ -49,8 +49,40 @@ contract Donations{
     }
 
     function getCommentData(uint _commentRef) public view returns(Comment memory){
-        require(_commentRef < pictureCount, "Comment doesn't exists!");
+        require(_commentRef < commentCount, "Comment doesn't exists!");
         return(comments[_commentRef]);
+    }
+
+    function getCommentCountFromPicture(uint _pictureRef) public view returns(uint){
+        require(_pictureRef < pictureCount, "Picture doesn't exists!");
+
+        uint result = 0;
+        for(uint i = 0; i < commentCount; i++){
+            bool condition1 = comments[i].pictureRef == _pictureRef;
+            bool condition2 = !comments[i].hidden || msg.sender == comments[i].wallet || msg.sender == pictures[_pictureRef].publisherWallet;
+
+            if(condition1 && condition2){
+                result++;
+            }
+        }
+        return(result);
+    }
+
+    function getAllCommentFromPicture(uint _pictureRef) public view returns(Comment[] memory){
+        require(_pictureRef < pictureCount, "Picture doesn't exists!");
+
+        Comment[] memory commentsResult = new Comment[](getCommentCountFromPicture(_pictureRef));
+        uint counter = 0;
+        for(uint i = 0; i < commentCount; i++){
+            bool condition1 = comments[i].pictureRef == _pictureRef;
+            bool condition2 = !comments[i].hidden || msg.sender == comments[i].wallet || msg.sender == pictures[_pictureRef].publisherWallet;
+
+            if(condition1 && condition2){
+                commentsResult[counter] = comments[i];
+                counter++;
+            }
+        }
+        return(commentsResult);
     }
 
     function addNewPicture(string memory _title, string memory _downloadURL) public {
@@ -66,14 +98,14 @@ contract Donations{
     function redeemPictureValue(uint _pictureRef) public payable{
         require(_pictureRef < pictureCount, "Picture doesn't exists!");
         require(pictures[_pictureRef].publisherWallet == msg.sender, "Picture not owned!");
-        require(pictures[_pictureRef].totalValue > pictures[pictureCount].redeemedValue, "Picture has too little value!");
+        require(pictures[_pictureRef].totalValue > pictures[_pictureRef].redeemedValue, "Picture has too little value!");
         payable(
             pictures[_pictureRef].publisherWallet
         ).transfer(
-            pictures[_pictureRef].totalValue - pictures[pictureCount].redeemedValue
+            pictures[_pictureRef].totalValue - pictures[_pictureRef].redeemedValue
         );
 
-        pictures[pictureCount].redeemedValue = pictures[pictureCount].totalValue;
+        pictures[_pictureRef].redeemedValue = pictures[_pictureRef].totalValue;
     }
 
 
@@ -95,63 +127,19 @@ contract Donations{
 
     function toggleCommentState(uint _commentRef) public {
         require(_commentRef < commentCount, "Comment doesn't exists!");
-        require(comments[commentCount].wallet == msg.sender, "Comment not owned!");
+        require(comments[_commentRef].wallet == msg.sender, "Comment not owned!");
         comments[_commentRef].hidden = !comments[_commentRef].hidden;
     }
 
     function boostComment(uint _commentRef) public payable{
         require(_commentRef < commentCount, "Comment doesn't exists!");
-        require(comments[commentCount].wallet == msg.sender, "Comment not owned!");
+        require(comments[_commentRef].wallet == msg.sender, "Comment not owned!");
         require(msg.value > 0, "Donation too small!");
         payable(address(this)).transfer(msg.value);
 
         comments[_commentRef].value += msg.value;
         pictures[comments[_commentRef].pictureRef].totalValue += msg.value;
     }
-
-    function viewCommentsAsPublisher(uint _pictureRef) public view returns(string memory){
-        require(_pictureRef < pictureCount, "Picture doesn't exists!");
-        require(pictures[_pictureRef].publisherWallet == msg.sender, "Picture not owned!");
-
-        string memory result = "";
-        for(uint i = 0; i < commentCount; i++){
-            bool condition1 = comments[i].pictureRef == _pictureRef;
-
-            if(condition1){
-                result = string.concat(result, "(", uint2str(comments[i].value), ")", comments[i].content, "\n");
-            }
-        }
-        return result;
-    }
-
-    function viewComments(uint _pictureRef) public view returns(string memory){
-        require(_pictureRef < pictureCount, "Picture doesn't exists!");
-
-        string memory result = "";
-        for(uint i = 0; i < commentCount; i++){
-            bool condition1 = comments[i].pictureRef == _pictureRef;
-            bool condition2 = !comments[i].hidden;
-
-            if(condition1 && condition2){
-                result = string.concat(result, "(", uint2str(comments[i].value), ")", comments[i].content, "\n");
-            }
-        }
-        return result;
-    }
-
-
-
-    // function addBalance() public payable{
-    //     payable(address(this)).transfer(msg.value);
-    // }
-
-    // function getBalance() public view returns(uint){
-    //     return (address(this)).balance;
-    // }
-
-    // function buyToken(address EoA) public payable{
-    //     payable(EoA).transfer(1 ether);
-    // }
 
     function uint2str(uint _i) internal pure returns (string memory _uintAsString) {
         if (_i == 0) {
