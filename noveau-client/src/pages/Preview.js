@@ -164,7 +164,9 @@ _________________________________________________________
                   <hr />
 
                   <div className="social" ><center>
-                    <button href="checkout1.html" className="btn btn-primary">Donasi!<i ></i></button>
+                    <Link to={`../checkout/${pictureId}`}>
+                        <button className="btn btn-primary">Donasi!<i ></i></button>
+                    </Link>
                     <h4>atau</h4>
                     <h4>bagikan ke teman!</h4>
                     <p>

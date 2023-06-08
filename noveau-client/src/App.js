@@ -3,6 +3,7 @@ import './App.css';
 // import ContractData from './ContractData';
 import Header from './Header.js';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Checkout from './pages/Checkout.js';
 import Home from './pages/Home.js';
 import Preview from './pages/Preview.js';
 import Search from './pages/Search.js';
@@ -28,6 +29,7 @@ function App() {
             <Route path='/' element={<Home />} />
             <Route path='/preview/:pictureId' element={<Preview />} />
             <Route path='/search' element={<Search />} />
+            <Route path='/checkout/:pictureId' element={<Checkout />} />
           </Routes>
         <Footer />
       </Router>
